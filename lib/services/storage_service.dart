@@ -7,7 +7,7 @@ class StorageService {
 
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
-  Future<String?> uplOadUserPfp({
+  Future<String?> uploadUserPfp({
     required File file,
     required String uid,
   }) async {
@@ -15,10 +15,11 @@ class StorageService {
         .ref('users/pfps')
         .child('$uid${p.extension(file.path)}');
     UploadTask task = fileRef.putFile(file);
-    return task.then((p) {
-      if (p.state == TaskState.success) {
-        return fileRef.getDownloadURL();
-      }
-    });
+    TaskSnapshot snapshot = await task;
+    if (snapshot.state == TaskState.success) {
+      return await fileRef.getDownloadURL();
+    } else {
+      return null;
+    }
   }
 }

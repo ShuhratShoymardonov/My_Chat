@@ -31,7 +31,7 @@ Future RegisterServices() async {
    getIt.registerSingleton<StorageService>(
     StorageService(),
   );
-   getIt.registerSingleton<DataBasaServoce>(
-    DataBasaServoce(),
+   getIt.registerSingleton<DatabaseService>(
+    DatabaseService(),
   );
 }

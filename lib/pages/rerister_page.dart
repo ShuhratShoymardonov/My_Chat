@@ -27,7 +27,7 @@ class _RegisterPageState extends State<RegisterPage> {
   late AuthService _authService;
   late StorageService _storageService;
   late AlartService _alartService;
-  late DataBasaServoce _dataBasaServoce;
+  late DatabaseService _dataBasaServoce;
 
   String? email, password, name;
 
@@ -42,7 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _navigationService = _getIt.get<NavigationService>();
     _authService = _getIt.get<AuthService>();
     _storageService = _getIt.get<StorageService>();
-    _dataBasaServoce = _getIt.get<DataBasaServoce>();
+    _dataBasaServoce = _getIt.get<DatabaseService>();
     _alartService = _getIt.get<AlartService>();
   }
 
@@ -192,12 +192,12 @@ class _RegisterPageState extends State<RegisterPage> {
               _registerFromKey.currentState?.save();
               bool result = await _authService.signum(email!, password!);
               if (result) {
-                String? pfpURL = await _storageService.uplOadUserPfp(
+                String? pfpURL = await _storageService.uploadUserPfp(
                   file: selectedImage!,
                   uid: _authService.user!.uid,
                 );
                 if (pfpURL == null) {
-                  await _dataBasaServoce.createUserProfile(
+                  await _dataBasaServoce.createUser(
                     userProfile: UserProfile(
                         uid: _authService.user!.uid,
                         name: name,
